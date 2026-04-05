@@ -1,0 +1,126 @@
+.heroContainer {
+  position: relative;
+  height: 85vh;
+  /* Standardizing the anchor */
+  width: 100vw;
+  max-width: 1200px;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* Pinning content perfectly on the bottom axis */
+  cursor: crosshair;
+
+  /* Initial CSS Variable declarations */
+  --x: -1000px;
+  --y: -1000px;
+  --size: 0px;
+  --lx: 0px;
+  --ly: 0px;
+}
+
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* We want the glow effects to softly fade out instead of clipping hard boundaries */
+  /* If parallax breaks out slightly, it stays contained or overflows beautifully */
+}
+
+/* Layering logic, keeping both items aligned strictly to bottom */
+.baseLayer,
+.revealLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+  /* Keep cursor interacting only with the wrapper */
+  transform-origin: bottom center;
+}
+
+.portraitImg,
+.cyborgImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  /* This behaves reliably for bottom-anchored content in Next */
+}
+
+/* THE BASE LAYER */
+.baseLayer {
+  z-index: 1;
+  /* Subdued filter layout waiting to be hovered */
+  filter: grayscale(10%) contrast(1.1);
+  transition: filter 0.5s ease;
+  transform: translate(var(--lx), var(--ly));
+}
+
+.heroContainer:hover .baseLayer {
+  /* Dynamic fade to dark emphasizing the scanner */
+  filter: grayscale(80%) contrast(1.2) brightness(0.4);
+}
+
+/* THE MAGIC MASK REVEAL LAYER */
+.revealLayer {
+  z-index: 2;
+  /* Slightly more intense parallax translation giving a 3D separation between layers */
+  transform: translate(calc(var(--lx) * 1.8), calc(var(--ly) * 1.8)) scale(1.02);
+
+  /* Mask engine: The magical trick exposing image strictly through CSS circular masking gradient */
+  -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), black calc(var(--size) * 0.4), transparent var(--size));
+  mask-image: radial-gradient(circle at var(--x) var(--y), black calc(var(--size) * 0.4), transparent var(--size));
+}
+
+.cyborgImg {
+  /* Extra punch for the cyberpunk transformation */
+  filter: brightness(1.25) contrast(1.3) saturate(1.4);
+}
+
+/* THE GLOW / LIGHT FIXTURE RING */
+.glowFollower {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+
+  /* Multiply the size radius by 2 for the circle's full diameter */
+  width: calc(var(--size) * 2.2);
+  height: calc(var(--size) * 2.2);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+
+  /* Completely clear background/border/shadow as requested for the cutout container area */
+  border: none;
+  background: none;
+  box-shadow: none;
+
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.showGlow {
+  opacity: 1;
+}
+
+/* PREMIUM NOISE/GRAIN (Helps gradient banding & drives the futuristic vibe!) */
+.noiseOverlay {
+  display: none;
+  /* Removing noise overlay that was creating a restricted visible box */
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .heroContainer {
+    height: 60vh;
+  }
+}

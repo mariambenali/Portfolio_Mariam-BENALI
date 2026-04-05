@@ -1,0 +1,200 @@
+/* ── Page shell ──────────────────────────────────────────────────────────── */
+.main {
+  background-color: #050816;
+  color: #fff;
+  min-height: 350vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── Starfield ───────────────────────────────────────────────────────────── */
+.particleContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.spaceGradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(10, 13, 46, 0.5) 0%,
+    #050816 100%
+  );
+  z-index: -1;
+}
+
+/* ── Scroll hero section ─────────────────────────────────────────────────── */
+.heroSection {
+  /* Tall so the sticky element has scroll distance to animate through */
+  height: 250vh;
+  position: relative;
+  width: 100%;
+}
+
+/* Locks the visual output in the viewport while scroll drives transforms */
+.stickyContainer {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* ── Portrait wrapper — animated by Framer Motion ────────────────────────── */
+.imageWrapper {
+  /* height stays 100vh; only width + radius + scale animate */
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  will-change: width, border-radius, transform;
+  /* Subtle glow effect when framed */
+  box-shadow: 0 0 80px rgba(56, 189, 248, 0.08);
+}
+
+.portraitImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: grayscale(100%) contrast(1.08);
+  /* No border, no frame — raw cinematic bleed */
+}
+
+/* Gradient that fades the portrait bottom into the page background */
+.imageFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent 0%, #050816 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Name + Marquee overlay ──────────────────────────────────────────────── */
+/* Sits over the full stickyContainer width — always edge-to-edge */
+.bottomOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  /* Deep gradient so text reads clearly over both fullscreen & framed portrait */
+  background: linear-gradient(
+    to top,
+    rgba(5, 8, 22, 1) 0%,
+    rgba(5, 8, 22, 0.75) 35%,
+    rgba(5, 8, 22, 0) 100%
+  );
+  padding: 7rem 0 1.75rem;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroName {
+  font-size: clamp(2.8rem, 9vw, 7.5rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 0.6rem;
+  text-shadow: 0 0 60px rgba(56, 189, 248, 0.25);
+  line-height: 1;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────────── */
+.marqueeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100vw; /* always edge-to-edge regardless of imageWrapper width */
+  overflow: hidden;
+}
+
+.marqueeTrack {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* The inner track is exactly 2× content width; -50% = one seamless loop */
+.marqueeInner {
+  display: inline-flex;
+  width: max-content;
+  /* animationDuration injected via style prop on each line */
+  animation: marqueeScroll linear infinite;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marqueeCopy {
+  display: inline-block;
+}
+
+/* Ticker styles */
+.ticker1 {
+  font-size: clamp(0.7rem, 1.6vw, 1.1rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  padding-right: 0;
+}
+
+.ticker2 {
+  font-size: clamp(0.7rem, 1.5vw, 1.05rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.highlight {
+  color: #38bdf8;
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* ── Post-hero content ───────────────────────────────────────────────────── */
+.contentSection {
+  position: relative;
+  z-index: 2;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sectionText {
+  max-width: 700px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
