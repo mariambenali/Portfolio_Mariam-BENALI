@@ -110,7 +110,7 @@ const Navbar = () => {
 
 const TickerBar = () => {
   const text = "AI DEVELOPER  |  FULLSTACK DEVELOPER  |  MLOPS  |  COMPUTER VISION ENTHUSIAST";
-  const repeated = Array(8).fill(text); // repeat 8x for seamless loop
+  const repeated = Array(8).fill(text);
 
   return (
     <div className={styles.tickerWrapper}>
@@ -382,7 +382,7 @@ const FloatingQuote = () => (
           borderLeft: '2px solid rgba(56,189,248,0.4)',
         }}
       >
-        — Miriam Benali
+        — Mariam Benali
       </motion.p>
     </motion.div>
   </motion.div>
@@ -761,7 +761,7 @@ const experiences = [
   {
     title: "AI Engineer",
     from: "2025",
-    to: "Present",
+    to: "2026",
     company: "Simplon",
     type: "Certificate",
     side: "right",
@@ -769,8 +769,8 @@ const experiences = [
   },
   {
     title: "Manager",
-    from: "2024",
-    to: "2025",
+    from: "2019",
+    to: "2024",
     company: "Business Family",
     type: "Personal",
     side: "left",
@@ -778,8 +778,8 @@ const experiences = [
   },
   {
     title: "Telesales & Customer Service Agent",
-    from: "Mars 2024",
-    to: "Jul 2024",
+    from: "Mars 2015",
+    to: "Jul 2020",
     company: "Webhelp",
     type: "CDI",
     side: "right",
@@ -787,8 +787,8 @@ const experiences = [
   },
   {
     title: "Webmarketer",
-    from: "2022",
-    to: "2023",
+    from: "2013",
+    to: "2015",
     company: "COMELIA",
     type: "CDI",
     side: "left",
@@ -796,8 +796,7 @@ const experiences = [
   },
   {
     title: "Banking Customer Service",
-    from: "2021",
-    to: "2022",
+    date: "2013",
     company: "Banque Populaire",
     type: "CDD",
     side: "right",
@@ -1186,7 +1185,7 @@ export default function Home() {
             variants={staggerContainer}
           >
             <motion.h1 variants={fadeInUp} className={styles.title}>
-              Miriam Benali
+              Mariam Benali
             </motion.h1>
 
             <motion.div
