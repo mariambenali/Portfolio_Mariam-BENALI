@@ -6,6 +6,7 @@ import { BrainCircuit, Code, Database, Server, Rocket, Cpu, Terminal, Layout, Cl
 import styles from './page.module.css';
 import Hero from '../components/Hero';
 import LoadingScreen from '../components/LoadingScreen';
+import Chatbot from '../components/Chatbot';
 
 const WHATSAPP_PHONE = "+212661147321";
 
@@ -544,11 +545,20 @@ const projects = [
     tags: ["python", "nlp", "kubernetes", "machine-learning", "grafana", "prometheus", "mlops", "github-actions", "huggingface", "evidently", "chromadb"],
     image: "nlp.png",
     github: "https://github.com/mariambenali/NLP-Classification_Support_Tickets",
-    angle: 300
+  },
+  {
+    id: 7,
+    title: "LSM-TALK",
+    subtitle: "AI-based sign language recognition system",
+    description: "This repository showcases an AI-based sign language recognition system using MediaPipe for real-time keypoint extraction and LSTM neural networks for temporal gesture recognition, aiming to improve accessibility through intelligent human–computer interaction.",
+    tags: ["Python", "MediaPipe", "LSTM", "Computer Vision", "AI"],
+    image: "/LSM.png",
+    github: "https://github.com/mariambenali/Lsm-Talk",
   }
 ];
 
-const CARD_ANGLES = [0, 60, 120, 180, 240, 300];
+const ANGLE_STEP = 360 / projects.length;
+const CARD_ANGLES = projects.map((_, i) => i * ANGLE_STEP);
 
 const ProjectCard = ({ project, index }: { project: any, index: number }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -667,38 +677,58 @@ const ProjectCarousel = ({ carouselRef }: { carouselRef: React.RefObject<HTMLEle
     restDelta: 0.001,
   });
 
+  const currentIndex = useRef(0);
+  const lastScrollTime = useRef(0);
+
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
 
-    let isAnimating = false;
-
     const handleWheel = (e: WheelEvent) => {
-      // Extremely low thresholds ignored
-      if (Math.abs(e.deltaY) < 3) return;
-
       const isScrollingDown = e.deltaY > 0;
-      const currentRot = rotationValue.get();
+      const maxIndex = projects.length - 1;
 
-      const minRotation = (projects.length - 1) * -60;
-      const maxRotation = 0;
+      // Determine if we can move entirely within the carousel bounds
+      const isWithinBounds = 
+        (isScrollingDown && currentIndex.current < maxIndex) || 
+        (!isScrollingDown && currentIndex.current > 0);
 
-      // ONLY allow scroll escape if we are entirely finished animating
-      if (!isAnimating) {
-        if (isScrollingDown && currentRot <= minRotation) return;
-        if (!isScrollingDown && currentRot >= maxRotation) return;
+      const isAttemptingToExit =
+        (isScrollingDown && currentIndex.current === maxIndex) ||
+        (!isScrollingDown && currentIndex.current === 0);
+
+      const now = Date.now();
+      // Use an 800ms lock to avoid fast skipping AND absorb trackpad inertia
+      const isAnimating = now - lastScrollTime.current < 800;
+
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const isAligned = Math.abs(rect.top) < 20;
+      
+      const isPartiallyVisible = !isAligned && Math.abs(rect.top) < viewportHeight * 0.6;
+
+      // Trap scroll if we are inside bounds, animating, or partially visible and NOT exiting
+      if (isWithinBounds || isAnimating || (isPartiallyVisible && !isAttemptingToExit)) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!isAligned) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Only swap cards if we are aligned, have an intent to scroll, and aren't locked
+        if (isWithinBounds && !isAnimating && Math.abs(e.deltaY) > 5 && isAligned) {
+          if (isScrollingDown) {
+            currentIndex.current += 1;
+          } else {
+            currentIndex.current -= 1;
+          }
+
+          rotationValue.set(-currentIndex.current * ANGLE_STEP);
+          lastScrollTime.current = Date.now();
+        }
       }
-
-      // Inside carousel limit - intercept standard scroll rigidly
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (!isAnimating) {
-        isAnimating = true;
-        const delta = isScrollingDown ? 1 : -1;
-        rotationValue.set(currentRot - delta * 60);
-        setTimeout(() => { isAnimating = false; }, 1200); // 1.2s strong trap lock
-      }
+      // Otherwise, the page will release its lock and scroll naturally over the rest of the portfolio!
     };
 
     el.addEventListener('wheel', handleWheel, { passive: false });
@@ -760,8 +790,8 @@ const ProjectCarousel = ({ carouselRef }: { carouselRef: React.RefObject<HTMLEle
 const experiences = [
   {
     title: "AI Engineer",
-    from: "2025",
-    to: "2026",
+    from: "Oct 2025",
+    to: "Mars 2026",
     company: "Simplon",
     type: "Certificate",
     side: "right",
@@ -769,8 +799,8 @@ const experiences = [
   },
   {
     title: "Manager",
-    from: "2019",
-    to: "2024",
+    from: "Dec 2019",
+    to: "Nov 2024",
     company: "Business Family",
     type: "Personal",
     side: "left",
@@ -778,8 +808,8 @@ const experiences = [
   },
   {
     title: "Telesales & Customer Service Agent",
-    from: "Mars 2015",
-    to: "Jul 2020",
+    from: "June 2015",
+    to: "Sept 2019",
     company: "Webhelp",
     type: "CDI",
     side: "right",
@@ -787,8 +817,8 @@ const experiences = [
   },
   {
     title: "Webmarketer",
-    from: "2013",
-    to: "2015",
+    from: "Jan 2013 ",
+    to: "Apr 2015",
     company: "COMELIA",
     type: "CDI",
     side: "left",
@@ -796,11 +826,21 @@ const experiences = [
   },
   {
     title: "Banking Customer Service",
-    date: "2013",
+    from: "Jul 2012",
+    to: "Dec 2012",
     company: "Banque Populaire",
     type: "CDD",
     side: "right",
     tab: "job-5.py"
+  },
+  {
+    title: "Training",
+    from: "Jul 2011",
+    to: "Aug 2011 ",
+    company: "Agence National Des Port",
+    type: "Training",
+    side: "left",
+    tab: "job-1.py"
   },
 ];
 
@@ -1230,7 +1270,16 @@ export default function Home() {
           id="projects"
           ref={carouselRef}
           className={styles.projectsSection}
-          style={{ height: '100vh', overflow: 'hidden', padding: '0', position: 'relative' }}
+          style={{ 
+            height: '100vh', 
+            overflow: 'hidden', 
+            padding: '0', 
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            scrollSnapAlign: 'center'
+          }}
         >
           <ProjectCarousel carouselRef={carouselRef} />
         </section>
@@ -1352,8 +1401,7 @@ export default function Home() {
                   animate={{ scale: [1, 1.5, 1] }}
                   transition={{
                     scale: { repeat: Infinity, duration: 2 },
-                    opacity: { delay: idx * 0.12 + 0.2 },
-                    initial: { delay: idx * 0.12 + 0.2 }
+                    opacity: { delay: idx * 0.12 + 0.2 }
                   }}
                 />
                 <ExperienceCard exp={exp} index={idx} />
@@ -1410,6 +1458,8 @@ export default function Home() {
 
         <Footer />
       </motion.main>
+
+      {mounted && !isLoading && <Chatbot />}
     </>
   );
 }

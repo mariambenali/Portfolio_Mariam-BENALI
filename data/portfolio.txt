@@ -1,0 +1,59 @@
+Name: Mariam Benali
+Role: AI Engineer & Fullstack Developer
+
+Projects:
+- Lsm-Talk: translate sign language to text using computer vision, LSTM.
+- RAG AI Assistant: chatbot for IT support using LangChain
+- HR-Pulse: job analysis with NER and salary prediction
+- RetentionAI: employee turnover prediction
+- Smart LogiTrack: system predict urban transport (ETA)
+- Emotion Detector: detect emotion from face using computer vision
+- NLP Classification Support Tickets: End-to-end NLP batch pipeline for IT support ticket classification, covering data exploration, text preprocessing, embeddings with Hugging Face, supervised ML training, evaluation, and deployment.
+- Quant AI prediction Bitcoin price: System that collects Binance data, calculates technical indicators, trains a Machine Learning model to predict Bitcoin price in 10 minutes and exposes the results via an API REST.
+- RetentionAI: FullStack HR analytics platform combining supervised machine learning and generative AI. It exposes a secure JWT-based API, uses PostgreSQL for data persistence, and is containerized with Docker to deliver an explainable, scalable, and production-ready solution.
+- Hybrid-Analyzer: A fullstack application designed to automate the analysis of monitoring articles through the orchestration of two AI services.
+- Facial Detection: DeepLearning project that detects faces in images and videos.
+- Prédiction du Risque Cardiaque: Machine Learning project that predicts the risk of heart disease.
+- Delivery_Time_Prediction: Machine Learning project that predicts the delivery time of orders.
+
+
+Skills:
+- Python, SQL, JavaScript, Scikit-learn, TensorFlow, Keras, LSTM, CNN, NLP, LLM, ComputerVision, RAG, MediaPipe, Pyspark, matplotlib, seaborn.
+- FastAPI, REST APIs, JWT Authentication.
+- PostgreSQL, Azure SQL, Pandas, NumPy, Data Processing.
+- Docker, Terraform, GitHub Actions, CI/CD, Azure, Kubernetes, Evidently, OpenTelemetry, Jaeger, MLflow, Airflow.
+- Next.js, Streamlit, HTML, CSS, Websocket.
+
+
+Experience:
+- Gerante — projet familiale des meubles d’interieur
+  Encadrement d’equipe, suivi des commandes.
+- Tele Conseillere / Agent Service Client & Telesales — Webhelp
+  Gestion des appels entrants et sortants, vente de produits et services, assistance et fidelisation des clients, ainsi que traitement des reclamations.
+- Webmarketer — COMELIA SARL
+  Mise en œuvre de strategies de marketing digital, gestion de campagnes
+  et analyse des performances pour optimisation.
+- Chargee de clientele bancaire — Banque Populaire
+  Accueil et accompagnement des clients et conseil sur les produits financiers.
+
+
+Formation:
+- Professional Certificate in Data Science & AI - Simplon - Octobre 2025 - Avril 2026
+- Professional Bachelor's Degree in Management - Sherbrooke University - Septembre 2012 - Juin 2013
+- Bachelor Assistant Administrative et Comptable - Sherbrooke University - Septembre 2010 - Juin 2012
+
+
+Language:
+- Arabic (C2) 
+- French (C1) 
+- English (B2) 
+- Spanish (B1) 
+- Amazigh (C2)
+
+
+Soft Skills:
+- Team spirit 
+- Adaptability 
+- Time management 
+- Active listening 
+- Creativity
